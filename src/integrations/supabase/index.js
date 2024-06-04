@@ -25,6 +25,9 @@ Event // table: events
     id: number
     name: string
     date: string
+    description: string
+    venue_id: number
+    is_pinned: boolean
 
 Comment // table: comments
     id: number
@@ -35,6 +38,9 @@ Venue // table: venues
     id: number
     name: string
     location: string
+    description: string
+    created_at: string
+    updated_at: string
 	
 */
 
