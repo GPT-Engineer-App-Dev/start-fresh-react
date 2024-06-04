@@ -1,8 +1,17 @@
-import { Container, Text, VStack, Box, Flex, Spacer, IconButton, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import { Container, Text, VStack, Box, Flex, Spacer, IconButton, useColorMode, useColorModeValue, Button } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
+import { useSupabaseAuth } from "../integrations/supabase/auth.jsx";
 import { FaSun, FaMoon } from "react-icons/fa";
 
 const Index = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const navigate = useNavigate();
+  const { session, logout } = useSupabaseAuth();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
   const bg = useColorModeValue("gray.100", "gray.900");
   const color = useColorModeValue("black", "white");
 
@@ -16,6 +25,11 @@ const Index = () => {
           icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
           onClick={toggleColorMode}
         />
+        {session ? (
+          <Button ml={4} onClick={handleLogout}>Logout</Button>
+        ) : (
+          <Button ml={4} onClick={() => navigate("/login")}>Login</Button>
+        )}
       </Flex>
       <Container centerContent maxW="container.md" py={8}>
         <VStack spacing={4}>
